@@ -1,0 +1,32 @@
+<form [formGroup]="signinForm"
+ style="width: 700px; margin-top: 80px" 
+ (ngSubmit)="signIn(this.signinForm.value)" [(ngModel)]="user"
+ >
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input
+    [class.is-invalid] = "signinForm.get('nameOrEmail').invalid && signinForm.get('nameOrEmail').touched "
+      type="email"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      placeholder="Enter email"
+      formControlName="nameOrEmail"
+    />
+    <p *ngIf="this.errors.field === 'nameOrEmail'">{{ errors.message }}</p>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input
+    [class.is-invalid] = "signinForm.get('password').invalid && signinForm.get('password').touched "
+      type="password"
+      class="form-control"
+      id="exampleInputPassword1"
+      placeholder="Password"
+      formControlName="password"
+    />
+    <p *ngIf="this.errors.field === 'password'">{{ errors.message }}</p>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Sign In</button>
+</form>
