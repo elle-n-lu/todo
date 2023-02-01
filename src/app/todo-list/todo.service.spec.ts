@@ -2,11 +2,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { HttpErrorHandler } from '../shared/http-error-handler.service';
 import { TodoService } from './todo.service';
-import { TodoItem } from './todo-item/todo-item';
-import { TodoCategory } from './todo-category';
 import { of } from 'rxjs';
+import { TodoItem } from './todo-item';
 
 describe('TodoService', () => {
   let service: TodoService;
@@ -20,7 +18,7 @@ describe('TodoService', () => {
       return
       <TodoItem>(operation?: string, result?: TodoItem) => { }
     });
-    service = new TodoService(httpClientSpy, httpErrorHandler);
+    service = new TodoService(httpClientSpy);
   });
 
   it('should be created', () => {
@@ -29,12 +27,12 @@ describe('TodoService', () => {
 
   it('should return expected todos and HttpClient called once', (done: DoneFn) => {
     const httpGetAllTodosResult: any[] =
-      [{ id: 1, label: 'A', description: 'D', category: TodoCategory.house, done: false },
-      { id: 2, label: 'A2', description: 'D2', category: TodoCategory.bureaucracy, done: '22-10-2019' }];
+      [{ id: 1,  description: 'D' },
+      { id: 2,  description: 'D2'}];
 
     const expectedTodos: TodoItem[] = [
-      new TodoItem(1, "A", "D", TodoCategory.house, false, null),
-      new TodoItem(2, "A2", "D2", TodoCategory.bureaucracy, true, new Date(2019, 9, 22))
+      new TodoItem( "D", 1,  false, new Date(2019, 9, 12)),
+      new TodoItem( "D2",2,  true, new Date(2019, 9, 22))
     ]
     expect(true).toBeTruthy();
     httpClientSpy.get.and.returnValue(of(httpGetAllTodosResult));

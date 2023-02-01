@@ -1,47 +1,39 @@
-<div class="container">
-    <div class="d-flex justify-content-between mb-3">
-        <div class="p-2">
-            Label, Description, Category name and status:
-        </div>
-        <div class="p-2">
-            <div class="input-group mb-3">
-                <div class="position-relative">
-                    <input type="text" class="form-control p-2" placeholder="Filter todo"
-                        aria-label="Todo label" aria-describedby="button-addon2"
-                        [(ngModel)]="filterValue" (keyup)="filterTodo($event)">
-                    <div class="cancel-search position-absolute" role="button"><i class="bi bi-x-lg" (click)="resetFilter()"></i></div>
-                </div>
+<div style="width: 700px; margin-top: 80px">
+  <div *ngFor="let todo of todos">
+    {{ todo.description }}
+  </div>
 
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">{{selectedFilterType}}</button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="#" *ngFor="let filterType of filterTypes"
-                            [hidden]="filterType.isHidden" (click)="chooseFilterType(filterType.name)">
-                            {{filterType.name}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+  <div class="mb-3">
+    <label for="todoDescription" class="form-label">Choose Language</label>
+    <textarea
+      class="form-control"
+      id="todoDescription"
+      rows="3"
+      [value]="todo.description"
+      (change)="todo.description = getValue($event)"
+    ></textarea>
     </div>
-</div>
-<ng-container *ngFor="let todoItem of todos">
-    <app-todo-item [todoItem]="todoItem" [todoCategories]="todoCategories" (editTodoItem)="editTodoItem($event)"
-        (deleteTodoItem)="deleteTodoItem($event)">
-    </app-todo-item>
-</ng-container>
 
-<div class="container">
-    <div class="d-flex justify-content-between mb-3">
-        <div class="p-2">
-        </div>
-        <div class="p-2">
-            <button class="btn btn-primary" (click)="openAddModal()">Add Todo</button>
-        </div>
-    </div>
+  <div class="mb-3">
+    <button  class="btn btn btn-primary">Translate</button>
+    <button
+    
+      class="btn btn-secondary"
+       (click)="addTodoItem(todo)"
+    >
+      Add
+    </button>
+    <button type="button" class="btn btn-outline-dark btn-tertiary" (click)="cancelAdd()" >
+      Cancel
+    </button>
+  </div>
+  <div class="mb-3">
+    <label for="todoDescription" class="form-label">Choose Langua</label>
+    <textarea
+      class="form-control"
+      id="todoDescription"
+      rows="3"
+    ></textarea
+    >
+  </div>
 </div>
-
-<app-add-edit-todo [todoCategories]="todoCategories" [openModal]="openAddEditModal"
-    (onCompleteAction)="addTodoItem($event)" (isCategorySelected)="isCategorySelected($event)">
-</app-add-edit-todo>
