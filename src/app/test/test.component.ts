@@ -1,9 +1,7 @@
-import { Component, Input, TemplateRef, ViewChild } from "@angular/core";
-import { Subject, Subscription } from "rxjs";
-import { UserParams } from "./user-params";
-import { UserService } from "./user.service";
-import { takeUntil } from "rxjs/operators";
+import { Component, TemplateRef, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { UserStatusService } from "../signin/userStatus.service";
+import { UserParams } from "./user-params";
 
 @Component({
   selector: "app-test",
@@ -11,47 +9,28 @@ import { UserStatusService } from "../signin/userStatus.service";
   styleUrls: ["./test.component.scss"],
 })
 export class TestComponent {
-  // private subscription: Subscription;
-   userStatus: string 
+  //change banner user status
+  userStatus: UserParams;
   @ViewChild("test") public test: TemplateRef<any>;
 
   constructor(
-    private userService: UserService,
-    private userStatusService: UserStatusService
+    private userStatusService: UserStatusService,
+    private router: Router
   ) {}
 
-  private _userList: UserParams[] = []; // all todo items
-
-  public get users(): Readonly<UserParams[]> {
-    return this._userList;
-  }
-
-  private _getUserListDestroyed$: Subject<UserParams[]> = new Subject();
-
-  private _signInDestroyed$: Subject<UserParams> = new Subject();
-  private _signOutDestroyed$: Subject<UserParams> = new Subject();
-
   ngOnInit(): void {
-    // this.getUserList(); // peform users DB reading
-    this.userStatusService.getUser().subscribe((data)=>{
-      // this.userStatus = data
-      console.log('userstatus', this.userStatus, data)
-    })
+    this.userStatusService.getUser().subscribe((data) => {
+      this.userStatus = data;
+    });
+    if (localStorage.getItem("userinfo")) {
+      this.userStatus = JSON.parse(localStorage.getItem("userinfo"));
+    }
   }
 
-  ngOnDestroy(): void {
-    this._getUserListDestroyed$.complete();
-    this._signInDestroyed$.complete();
-    this._signOutDestroyed$.complete();
-  }
+  logOut() {
+    localStorage.setItem("userinfo", "");
+    this.userStatusService.setUser(null);
 
-  getUserList(): UserParams[] {
-    this.userService
-      .getUserList()
-      .pipe(takeUntil(this._getUserListDestroyed$))
-      .subscribe((users) => {
-        this._userList = users;
-      });
-    return this._userList;
+    this.router.navigate(["/"]);
   }
 }

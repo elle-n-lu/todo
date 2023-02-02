@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
+import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -11,10 +11,13 @@ import { TestComponent } from "./test/test.component";
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserStatusService } from "./signin/userStatus.service";
+import { counterReducer } from "./test/user.reducers";
+import { RecordsComponent } from './records/records.component';
 
 @NgModule({
-  declarations: [AppComponent, TodoListComponent, TestComponent, SigninComponent, SignupComponent],
+  declarations: [AppComponent, TodoListComponent, TestComponent, SigninComponent, SignupComponent, RecordsComponent],
   imports: [
+    StoreModule.forRoot({userstate:counterReducer}),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
