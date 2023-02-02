@@ -1,14 +1,15 @@
-<div *ngIf="userStatus===null">
-  <button routerLink="/signIn" style="margin-left: 50px; margin: 24px">
+<div *ngIf="!userStatus">
+  <button routerLink="/signIn" class="btn btn-primary" style="margin-left: 50px; margin: 24px">
     Signin
   </button>
-  <button routerLink="/signUp">Sign Up</button>
+  <button routerLink="/signUp" class="btn btn-link ">Sign Up</button>
 </div>
-<div>
-  <button style="margin-left: 50px; margin: 24px">
+<div *ngIf="userStatus">
+  <button style="margin-left: 50px; margin: 24px" *ngIf="userStatus.isadmin" routerLink="/users-history">
     users-records
   </button>
-  <button routerLink="/signUp">Hello {{userStatus}}</button>
-  <button >logOut</button>
+  <button >Hello {{userStatus.name}}</button>
+  <button (click)="logOut()">logOut</button>
 
 </div>
+  

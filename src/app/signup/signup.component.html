@@ -1,6 +1,6 @@
-<form [formGroup]="signupForm" style="width: 700px; margin-top: 80px" (ngSubmit)="signUp(this.signupForm.value)">
-  <div class="form-group" >
-    <label >name</label>
+<form [formGroup]="signupForm" style="width: 400px; margin-top: 80px" (ngSubmit)="signUp(this.signupForm.value)">
+  <div class="form-group mb-3" >
+    <label class="form-label">name</label>
     <input
     [class.is-invalid] = "signupForm.get('name').invalid && signupForm.get('name').touched"
       type="name"
@@ -8,11 +8,11 @@
       placeholder="Enter Name"
       formControlName="name"
     />
-    <p *ngIf="this.errors.field==='name'">{{errors.message}}</p>
+    <p *ngIf="this.errors.field==='name'" style="color: red;">{{errors.message}}</p>
   </div>
   
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
+  <div class="form-group mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input
     [class.is-invalid] = "signupForm.get('email').invalid && signupForm.get('email').touched "
       type="email"
@@ -22,10 +22,10 @@
       placeholder="Enter email"
       formControlName="email"
     />
-    <p *ngIf="this.errors.field==='email'">{{errors.message}}</p>
+    <p *ngIf="this.errors.field==='email'" style="color: red;">{{errors.message}}</p>
   </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
+  <div class="form-group mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
     <input
     [class.is-invalid] = "signupForm.get('password').invalid && signupForm.get('password').touched "
       type="password"
@@ -34,8 +34,9 @@
       placeholder="Password"
       formControlName="password"
     />
+    <p *ngIf="this.errors.field==='password'" style="color: red;">{{errors.message}}</p>
 
   </div>
 
-  <button type="submit" class="btn btn-primary">Sign Up</button>
+  <button type="submit" class="btn btn-outline-primary" style="width: 100%;">Sign Up</button>
 </form>

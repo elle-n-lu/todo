@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Store } from "@ngrx/store";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { errors } from "../signup/signup.component";
@@ -18,47 +20,58 @@ export class SigninComponent {
   user: UserParams;
   constructor(
     private userService: UserService,
-    private userStatusService: UserStatusService
+    private userStatusService: UserStatusService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<any>
   ) {}
   private _signInDestroyed$: Subject<any> = new Subject();
 
   ngOnInit(): void {
     this.signinForm = new FormGroup({
-      nameOrEmail: new FormControl("", Validators.required),
+      name: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required),
     });
   }
   ngOnDestroy(): void {
     this._signInDestroyed$.complete();
   }
-
   signIn(user: UserParams): void {
+   
     this.userService
       .signIn(user)
       .pipe(takeUntil(this._signInDestroyed$))
       .subscribe(
         (res) => {
-          // this._userList.push(new UserParams( user.name, user.email, user.password, user.id))
-          console.log("res signIn", res);
-          this.errors = { field: "", message: "" };
-          
-          this.userStatusService.setUser(this.user.name)
+          //use service to store and pass user info
+          this.userStatusService.setUser({
+            email: res[0].email,
+            name: res[0].name,
+            password: res[0].password,
+            id: res[0].id,
+            isadmin: res[0].isadmin,
+          });
+          //use localtorage to save userinfo and reducer to change state
+          localStorage.setItem(
+            "userinfo",
+            JSON.stringify({
+              email: res[0].email,
+              name: res[0].name,
+              password: res[0].password,
+              id: res[0].id,
+              isadmin: res[0].isadmin,
+            })
+          );
+          this.router.navigate(["/"]);
         },
         (err) => {
-          console.log("err", err.error as string);
-          if ((err.error as string).includes("unique_user")) {
-            this.errors = {
-              field: "nameOrEmail",
-              message: "name already exist",
-            };
+          if (err.error.field==="nameOrEmail") {
+            this.errors = { field: "nameOrEmail", message: "username or email not correct" };
           }
-          if ((err.error as string).includes("unique_email")) {
-            this.errors = { field: "email", message: "email already exist" };
+          if (err.error.field==="password") {
+            this.errors = { field: "password", message: "password not correct" };
           }
         }
       );
-  }
-
-  onStatusChange(){
   }
 }

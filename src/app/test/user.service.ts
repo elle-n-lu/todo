@@ -33,7 +33,6 @@ export class UserService {
   getUserList(): Observable<UserParams[]> {
     return this.http.get<UserParams[]>(`${this.todoBaseUrl}/getUsers`).pipe(
       map((todos: any) => {
-        console.log("axios todos", todos);
         let usersList: UserParams[] = todos.map((s: UserParams) => {
           return s;
         }); // map to UI format for todos (case data has inconsistency for 'done' property)

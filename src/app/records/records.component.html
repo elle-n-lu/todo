@@ -1,0 +1,60 @@
+<p>records works!</p>
+
+<div class="d-flex" style="width: 1000px; margin-top: 80px">
+  <div style="height: 400px" [ngStyle]="{ width: !show ? '100%' : '50%' }">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of _userList; index as i" style="height: 50px">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button
+              class="btn btn-primary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExample"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+              (click)="getTodoList(user.id)"
+            >
+              Check Records
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="collapse"
+    id="collapseExample"
+    style="width:500px;"
+  >
+    <table class="table" *ngIf="show" style="margin-left: 10px">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">todo item</th>
+          <th scope="col">translated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of _todoList; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <th>{{ item.description }}</th>
+          <th>
+            <input type="checkbox" [checked]="item.iscompleted" disabled />
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
