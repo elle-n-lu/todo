@@ -12,4 +12,4 @@ FROM nginx:1.23.0-alpine
 EXPOSE 8080
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /app/dist/todo /usr/share/nginx/html
+COPY --from=build /app/dist/angular-todo /usr/share/nginx/html
