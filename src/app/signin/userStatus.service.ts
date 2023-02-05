@@ -5,7 +5,7 @@ import { UserParams } from "../test/user-params";
 @Injectable()
 export class UserStatusService {
     private userStatus :Subject<UserParams> = new Subject<UserParams>()
-
+    redirectUrl: string | null = null;
     setUser(value: UserParams){
         this.userStatus.next(value)
     }

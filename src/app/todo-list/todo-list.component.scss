@@ -2,6 +2,8 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
 
+$light-green: #edf8ff;
+$text-color: #edfcff;
 :host {
     --todo-list-compnent-font-weight: 700;
     --todo-list-compnent-color: $primary;
@@ -24,5 +26,39 @@
                 right: var(--todo-list-compnent-cancel-search-right);
             }
         }
+    }
+}
+
+.userrecord {
+    width: 1000px;
+    background-color: deepskyblue;
+    display: flex;
+    height: 360px;
+    justify-content: end;
+    flex-direction: column;
+}
+
+.userrecord p {
+    font-size: 100px;
+    color: white;
+    font-weight: lighter;
+    margin-left: 20%;
+}
+
+.userrecord button {
+    color: deepskyblue;
+    width: 174px;
+    height: 70px;
+    background-color: white;
+    border: none;
+    font-size: 40px;
+    border-radius: 20px;
+    margin-left: 20%;
+    &:hover {
+		border: solid 2px $light-green;
+        background-color: deepskyblue;
+		cursor: pointer;
+        color: $text-color;
+	
     }
 }

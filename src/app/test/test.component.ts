@@ -32,5 +32,6 @@ export class TestComponent {
     this.userStatusService.setUser(null);
 
     this.router.navigate(["/"]);
+    location.reload()
   }
 }

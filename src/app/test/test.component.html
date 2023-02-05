@@ -2,14 +2,9 @@
   <button routerLink="/signIn" class="btn btn-primary" style="margin-left: 50px; margin: 24px">
     Signin
   </button>
-  <button routerLink="/signUp" class="btn btn-link ">Sign Up</button>
+  <button routerLink="/signUp" class="btn btn-link">Sign Up</button>
 </div>
-<div *ngIf="userStatus">
-  <button style="margin-left: 50px; margin: 24px" *ngIf="userStatus.isadmin" routerLink="/users-history">
-    users-records
-  </button>
-  <button >Hello {{userStatus.name}}</button>
-  <button (click)="logOut()">logOut</button>
-
+<div class="loginname" *ngIf="userStatus">
+  <span class="name"> {{ userStatus.name[0].toLocaleUpperCase() }}</span>
+  <button type="button" class="btn btn-outline-primary" style="margin-left: 10px; height: 38px;" (click)="logOut()">logOut</button>
 </div>
-  
