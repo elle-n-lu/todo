@@ -2,11 +2,11 @@ FROM node:16-alpine3.16 as build
 WORKDIR /app
 COPY package.json .
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 FROM nginx:1.23.0-alpine
 EXPOSE 8080
