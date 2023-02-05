@@ -8,6 +8,7 @@ import { UserParams } from "../test/user-params";
 import { UserStatusService } from "../signin/userStatus.service";
 import { GoogleObj } from "./translateType";
 import { Router } from "@angular/router";
+import { errors } from "../signup/signup.component";
 type languageParams = {
   code: string;
   language: string;
@@ -19,6 +20,7 @@ type languageParams = {
   styleUrls: ["./todo-list.component.scss"],
 })
 export class TodoListComponent implements OnInit {
+  errors: errors = { field: "", message: "sadsadasd" };
   lang = new FormControl("en");
   languages: languageParams[] = [
     { code: "en", language: "English" },
@@ -65,7 +67,6 @@ export class TodoListComponent implements OnInit {
   }
 
   public addTodoItem(todoItem: TodoItem): void {
-    if (this.userStatus) {
       this.todoService
         .addTodoItem(todoItem)
         .pipe(takeUntil(this._addTodoItemDestroyed$))
@@ -75,11 +76,15 @@ export class TodoListComponent implements OnInit {
             id: res[0].id,
             userid: res[0].userid,
           };
-        });
-    } else {
-      alert("user login needed");
-      this.router.navigate(["/signIn"]);
-    }
+        },
+        (err) => {
+          if (err.error.field==="userid") {
+            this.errors = { field: "userid", message: "login needed" };
+          }
+          if (err.error.field==="description") {
+            this.errors = { field: "description", message: "Forgot to enter something ?" };
+          }
+        })
   }
 
   getValue(e: Event): string {
