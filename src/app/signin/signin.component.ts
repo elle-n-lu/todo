@@ -26,7 +26,7 @@ export class SigninComponent {
     private store: Store<any>
   ) {}
   private _signInDestroyed$: Subject<any> = new Subject();
-
+  
   ngOnInit(): void {
     this.signinForm = new FormGroup({
       name: new FormControl("", Validators.required),
@@ -62,7 +62,12 @@ export class SigninComponent {
               isadmin: res[0].isadmin,
             })
           );
-          this.router.navigate(["/"]);
+          if(res[0].isadmin){
+            this.router.navigate(["/users-history"]);
+          }else{
+
+            this.router.navigate(["/"]);
+          }
         },
         (err) => {
           if (err.error.field==="nameOrEmail") {

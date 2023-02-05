@@ -32,7 +32,7 @@ export class TodoListComponent implements OnInit {
   language: languageParams = { code: "es", language: "Spanish" };
   todoTranslated: string = "";
   public todos$: TodoItem[]; // async list of Todo items
-  userStatus: UserParams;
+  userStatus: UserParams
   public onAddEditComplete: Subject<void> = new Subject(); // the ajax complete result callback
 
   constructor(
@@ -50,11 +50,11 @@ export class TodoListComponent implements OnInit {
   private _translateChangeDestroyed$: Subject<TodoItem> = new Subject();
 
   public ngOnInit(): void {
-
     if (localStorage.getItem("userinfo")) {
       this.userStatus = JSON.parse(localStorage.getItem("userinfo"));
 
       this.todo = { description: "", userid: this.userStatus.id };
+      console.log('this.userstatus', this.userStatus)
     }
   }
 
@@ -78,7 +78,9 @@ export class TodoListComponent implements OnInit {
           };
         },
         (err) => {
+          console.log('err',err)
           if (err.error.field==="userid") {
+            // alert('login')
             this.errors = { field: "userid", message: "login needed" };
           }
           if (err.error.field==="description") {

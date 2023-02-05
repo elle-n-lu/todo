@@ -1,0 +1,23 @@
+
+.loginname{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+.name {
+    width: 55px;
+    height: 55px;
+    border-radius: 100%;
+    background-color: lightgray;
+    text-align: center;
+    line-height: 55px;
+    display: block;
+    font-size: 25px;
+    &:hover {
+        border: gray;
+        background-color: white;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.32)
+    }
+}
