@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }} # TODO: update Google Cloud project id
   GAR_LOCATION: us-central1 # TODO: update Artifact Registry location
-  SERVICE: te09 # TODO: update Cloud Run service name
+  SERVICE: todo-cd # TODO: update Cloud Run service name
   REGION: us-central1 # TODO: update Cloud Run service region
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
   SA_EMAIL: ${{ secrets.SA_EMAIL }}
