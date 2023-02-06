@@ -18,6 +18,7 @@ export class RecordsComponent {
   id: number = 0;
   private _getUserListDestroyed$: Subject<UserParams[]> = new Subject();
   private _getTodoListDestroyed$: Subject<TodoItem[]> = new Subject();
+  private _deleteTodoItemDestroyed$: Subject<TodoItem> = new Subject()
 
   constructor(
     private todoService: TodoService,
@@ -30,6 +31,7 @@ export class RecordsComponent {
   ngOnDestroy(): void {
     this._getUserListDestroyed$.complete();
     this._getTodoListDestroyed$.complete();
+    this._deleteTodoItemDestroyed$.complete()
   }
 
   getUserList(): UserParams[] {
@@ -52,4 +54,13 @@ export class RecordsComponent {
 
     this.show = !this.show;
   }
+
+  deleteTodo(id:number){
+    this.todoService.deleteTodoItem(id).pipe(takeUntil(this._deleteTodoItemDestroyed$))
+    .subscribe(()=>{
+      console.log('removed')
+    })
+ 
+  }
+
 }
