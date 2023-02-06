@@ -28,18 +28,13 @@ export class AuthGuard implements CanActivate {
       const user: UserParams = JSON.parse(localStorage.getItem("userinfo"));
       if (user.isadmin) {
         return true;
-      }else{
-
-          return this.router.parseUrl("/");
+      } else {
+        return this.router.parseUrl("/");
       }
-    }else{
+    } else {
       return this.router.parseUrl("/");
-
     }
-
-    // Store the attempted URL for redirecting
-    // this.authService.redirectUrl = url;
-
-    // Redirect to the login page
   }
 }
+
+

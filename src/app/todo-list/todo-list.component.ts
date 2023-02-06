@@ -31,17 +31,16 @@ export class TodoListComponent implements OnInit {
   ];
   language: languageParams = { code: "es", language: "Spanish" };
   todoTranslated: string = "";
-  public todos$: TodoItem[]; // async list of Todo items
-  userStatus: UserParams
-  public onAddEditComplete: Subject<void> = new Subject(); // the ajax complete result callback
+
+  userStatus: UserParams;
+  // public onAddEditComplete: Subject<void> = new Subject(); // the ajax complete result callback
 
   constructor(
-    private todoService: TodoService,
-    private userStatusService: UserStatusService,
-    private router: Router
-  ) {}
+    private todoService: TodoService // private userStatusService: UserStatusService,
+  ) // private router: Router
+  {}
 
-  todo: TodoItem = { description: "" };
+  todo: TodoItem;
 
   private _getTodoListDestroyed$: Subject<TodoItem[]> = new Subject();
   private _deleteTodoItemDestroyed$: Subject<any> = new Subject();
@@ -54,7 +53,6 @@ export class TodoListComponent implements OnInit {
       this.userStatus = JSON.parse(localStorage.getItem("userinfo"));
 
       this.todo = { description: "", userid: this.userStatus.id };
-      console.log('this.userstatus', this.userStatus)
     }
   }
 
@@ -65,56 +63,47 @@ export class TodoListComponent implements OnInit {
     this._deleteTodoItemDestroyed$.complete();
     this._translateChangeDestroyed$.complete();
   }
-
-  public addTodoItem(todoItem: TodoItem): void {
-      this.todoService
-        .addTodoItem(todoItem)
-        .pipe(takeUntil(this._addTodoItemDestroyed$))
-        .subscribe((res) => {
-          this.todo = {
-            description: res[0].description,
-            id: res[0].id,
-            userid: res[0].userid,
-          };
-        },
-        (err) => {
-          console.log('err',err)
-          if (err.error.field==="userid") {
-            // alert('login')
-            this.errors = { field: "userid", message: "login needed" };
-          }
-          if (err.error.field==="description") {
-            this.errors = { field: "description", message: "Forgot to enter something ?" };
-          }
-        })
-  }
-
   getValue(e: Event): string {
     return (e.target as HTMLInputElement).value;
   }
 
-  cancelAdd(): void {
-    this.todo = { description: "" };
-    this.todoTranslated = "";
-    this.language.code = "es";
+  public addTodoItem(todoItem: TodoItem): void {
+    this.todoService
+      .addTodoItem(todoItem)
+      .pipe(takeUntil(this._addTodoItemDestroyed$))
+      .subscribe(
+        (res) => {
+          this.todo = {
+            description: res.description,
+            id: res.id,
+            userid: res.userid,
+          };
+        },
+        (err) => {
+          if (err.error.field === "userid") {
+            // alert('login')
+            this.errors = { field: "userid", message: "login needed" };
+          }
+          if (err.error.field === "description") {
+            this.errors = {
+              field: "description",
+              message: "Forgot to enter something ?",
+            };
+          }
+        }
+      );
   }
-
-  // public deleteTodoItem(todoId: number): void {
-  //   this.todoService
-  //     .deleteTodoItem(todoId)
-  //     .pipe(takeUntil(this._deleteTodoItemDestroyed$))
-  //     .subscribe(() => {
-  //       const index = this._todoList.findIndex((t) => t.id === todoId);
-
-  //       if (index !== -1) {
-  //         this._todoList.splice(index, 1); // hard remove the todo item
-  //       }
-  //     });
-  // }
 
   setChange() {
     this.language;
   }
+  cancelAdd(): void {
+    this.todo.description = "";
+    this.todoTranslated = "";
+    this.language.code = "es";
+    this.errors.field = "";
+  }
+
   translate(id: number): void {
     const transObj: GoogleObj = {
       q: this.todo.description,
