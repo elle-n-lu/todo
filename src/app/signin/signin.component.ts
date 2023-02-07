@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { errors } from "../signup/signup.component";
@@ -21,9 +20,7 @@ export class SigninComponent {
   constructor(
     private userService: UserService,
     private userStatusService: UserStatusService,
-    private route: ActivatedRoute,
     private router: Router,
-    private store: Store<any>
   ) {}
   private _signInDestroyed$: Subject<any> = new Subject();
   
