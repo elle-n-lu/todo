@@ -22,7 +22,6 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
   private _signUpDestroyed$: Subject<any> = new Subject();

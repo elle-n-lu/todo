@@ -3,8 +3,8 @@ export class TodoItem {
   constructor(
     public description: string,
     public id?: number,
-    public isCompleted?: boolean,
-    public completedOn?: Date,
+    public iscompleted?: boolean,
+    public completedon?: Date,
     public userid?:number
   ) {}
 }

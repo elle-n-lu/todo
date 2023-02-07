@@ -40,7 +40,7 @@ export class TodoListComponent implements OnInit {
   ) // private router: Router
   {}
 
-  todo: TodoItem;
+  todo: TodoItem={description: ""}
 
   private _getTodoListDestroyed$: Subject<TodoItem[]> = new Subject();
   private _deleteTodoItemDestroyed$: Subject<any> = new Subject();

@@ -35,7 +35,7 @@ export class TodoService {
     );
   }
 
-  public getTodoList(id:number): Observable<TodoItem[]> {
+  public getTodoList(id: number): Observable<TodoItem[]> {
     return this.http.get<TodoItem[]>(`${this.todoBaseUrl}/gettasks/${id}`).pipe(
       map((todos: any) => {
         let todoList: TodoItem[] = todos.map((s: TodoItem) => {
@@ -64,11 +64,10 @@ export class TodoService {
       .get<TodoItem>(`${this.todoBaseUrl}/translateChange/${id}`)
       .pipe(catchError(this.handleError));
   }
-  url = 'https://translation.googleapis.com/language/translate/v2?key=';
-    key = environment.envVar.API_KEY
+  url = "https://translation.googleapis.com/language/translate/v2?key=";
+  key = environment.envVar.API_KEY;
 
-    translate(obj: GoogleObj) {
-      return this.http.post(this.url + this.key, obj);
-    }
-
+  translate(obj: GoogleObj) {
+    return this.http.post(this.url + this.key, obj);
+  }
 }

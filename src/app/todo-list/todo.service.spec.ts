@@ -1,95 +1,95 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { TodoService } from './todo.service';
-import { of } from 'rxjs';
-import { TodoItem } from './todo-item';
+import { HttpClient } from "@angular/common/http";
+import { of } from "rxjs";
+import { TodoService } from "./todo.service";
 
-describe('TodoService', () => {
-  let service: TodoService;
+describe("todoService", () => {
+  let todoService: TodoService;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
-
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'patch', 'delete']);
-    let httpErrorHandler = jasmine.createSpyObj('HttpErrorHandler', ['createHandleError']);
-
-    httpErrorHandler.createHandleError.and.returnValue((text: string, arr: any[]) => {
-      return
-      <TodoItem>(operation?: string, result?: TodoItem) => { }
-    });
-    service = new TodoService(httpClientSpy);
+    httpClientSpy = jasmine.createSpyObj("HttpClient", [
+      "get",
+      "post",
+      "delete",
+    ]);
+    todoService = new TodoService(httpClientSpy);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-  it('should return expected todos and HttpClient called once', (done: DoneFn) => {
-    const httpGetAllTodosResult: any[] =
-      [{ id: 1,  description: 'D' },
-      { id: 2,  description: 'D2'}];
-
-    const expectedTodos: TodoItem[] = [
-      new TodoItem( "D", 1,  false, new Date(2019, 9, 12)),
-      new TodoItem( "D2",2,  true, new Date(2019, 9, 22))
-    ]
-    expect(true).toBeTruthy();
-    httpClientSpy.get.and.returnValue(of(httpGetAllTodosResult));
-    service.getTodoList().subscribe(
-      (todos) => {
-        expect(todos).toEqual(expectedTodos);
-        expect(todos.length).toEqual(2);
+  it("should return todo list", (done: DoneFn) => {
+    const expecTodoList = [
+      {
+        id: 1,
+        completedon: new Date(),
+        iscompleted: false,
+        description: "hello",
+        userid: 5,
+      },
+    ];
+    const id = 5;
+    httpClientSpy.get.and.returnValue(of(expecTodoList));
+    todoService.getTodoList(id).subscribe(
+      (res) => {
+        expect(res).toEqual(expecTodoList);
         done();
-      }, (error) => { });
-
-    expect(httpClientSpy.get.calls.count())
-      .withContext('one call')
-      .toBe(1);
+      },
+      (err) => done.fail
+    );
+    expect(httpClientSpy.get.calls.count()).withContext("one call").toBe(1);
   });
 
-  it('should add todo', (done: DoneFn) => {
-    const httpAddTodoItem: any =
-      { id: 1, label: 'A', description: 'D', category: TodoCategory.house, done: false };
-    const expectedTodo: TodoItem = new TodoItem(1, "A", "D", TodoCategory.house, false, null);
-
-    expect(true).toBeTruthy();
-    httpClientSpy.post.and.returnValue(of(httpAddTodoItem));
-
-    service.addTodoItem(httpAddTodoItem).subscribe(
-      (todos) => {
-        expect(todos).toEqual(expectedTodo);
+  it("should add todo and return todo", (done: DoneFn) => {
+    const expecttodo = {
+        id: 1,
+        completedon: new Date(),
+        iscompleted: false,
+        description: "hello",
+        userid: 5,
+      }
+      const addtodo = {description:"hello",userid:5}
+      httpClientSpy.post.and.returnValue(of(expecttodo))
+      todoService.addTodoItem(addtodo).subscribe((res)=>{
+        expect(res).toEqual(expecttodo);
         done();
-      }, (error) => { });    
+      },
+      (err) => done.fail
+    );
   });
-
-  it('should edit todo', (done: DoneFn) => {
-    const httpAddTodoItem: any =
-      { id: 1, label: 'A', description: 'D', category: TodoCategory.house, done: false };
-    const expectedTodo: TodoItem = new TodoItem(1, "A", "D", TodoCategory.house, false, null);
-
-    expect(true).toBeTruthy();
-    httpClientSpy.patch.and.returnValue(of(httpAddTodoItem));
-
-    service.editTodoItem(httpAddTodoItem).subscribe(
-      (todos) => {
-        expect(todos).toEqual(expectedTodo);
-        done();
-      }, (error) => { });    
+  it("should delete todo", (done: DoneFn) => {
+    const id=1
+    const out = 'removed'
+    httpClientSpy.delete.and.returnValue(of(out))
+    todoService.deleteTodoItem(id).subscribe((res)=>{
+        expect(res).toEqual(out)
+        done()
+    },(err)=>{}
+    )
   });
-
-  it('should delete todo', (done: DoneFn) => {
-    const httpAddTodoItem: any =
-      { id: 1, label: 'A', description: 'D', category: TodoCategory.house, done: false };    
-
-    expect(true).toBeTruthy();
-    httpClientSpy.delete.and.returnValue(of({}));
-
-    service.deleteTodoItem(httpAddTodoItem).subscribe(
-      (todos) => {
-        expect(todos).toEqual({});
-        done();
-      }, (error) => { });    
+  it("should update todo translate state", (done: DoneFn) => {
+    const expecttodo ={
+        id: 1,
+        completedon: new Date(),
+        iscompleted: true,
+        description: "hello",
+        userid: 5,
+    }
+    const input = 1
+    httpClientSpy.get.and.returnValue(of(expecttodo))
+    todoService.translateChange(input).subscribe((res)=>{
+        expect(res).toEqual(expecttodo)
+        done()
+    },(err)=>{})
+  });
+  it("should just translate todo and return translated todo", (done: DoneFn) => {
+    const input = {
+        q:'hello',
+        target:'es'
+    }
+    const expectvalue ={
+        translated: 'hola'
+    }
+    httpClientSpy.post.and.returnValue(of(expectvalue))
+    todoService.translate(input).subscribe(res=>{
+        expect(res).toEqual(expectvalue)
+        done()
+    })
   });
 });
-
