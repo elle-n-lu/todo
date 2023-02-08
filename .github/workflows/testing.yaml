@@ -14,8 +14,8 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-      CI: 'true'
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+      CI: true
     strategy:
       matrix:
         node-version: [ 18.x]
@@ -35,5 +35,5 @@ jobs:
         chromedriver --url-base=/wd/hub &
         sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
         yarn test
-      env:
-        CI: true
+        env:
+          CI: true
