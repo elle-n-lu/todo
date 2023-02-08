@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
 import { TodoListComponent } from "./todo-list.component";
 import { TodoService } from "./todo.service";
@@ -21,12 +22,6 @@ const transObj: GoogleObj = {
 
 const justTranslate = "hola";
 
-const translatebefore = {
-  id: 1,
-  iscompleted: false,
-  description: "hello",
-  userid: 5,
-};
 const translateAfter = {
   id: 1,
   iscompleted: true,
@@ -38,24 +33,26 @@ const translateAfter = {
 describe("TodoListComponent", () => {
   let component: TodoListComponent;
   let fixture: ComponentFixture<TodoListComponent>;
-  let btn: HTMLElement;
   const todoServiceSpy = jasmine.createSpyObj<TodoService>([
     "addTodoItem",
     "translate",
     "translateChange",
   ]);
-
+  const toastrServiceSpy = jasmine.createSpyObj<ToastrService>(['success'])
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TodoListComponent],
-      providers: [{ provide: TodoService, useValue: todoServiceSpy }],
+      providers: [{ provide: TodoService, useValue: todoServiceSpy },
+        { provide: ToastrService, useValue: toastrServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TodoListComponent);
     component = fixture.componentInstance;
-    btn = fixture.nativeElement.querySelector("#resetbtn");
   });
-
+  it("should show toast success",()=>{
+    toastrServiceSpy.success('succeed to add item')
+    expect(toastrServiceSpy.success).toHaveBeenCalledWith('succeed to add item')
+  })
   it("should add a todo item", () => {
     todoServiceSpy.addTodoItem.and.returnValue(of(translateItem));
     todoServiceSpy.addTodoItem(todoItem).subscribe((todo) => {

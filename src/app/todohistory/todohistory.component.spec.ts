@@ -1,17 +1,20 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
-import { TodoItem } from '../todo-list/todo-item';
-import { TodoService } from '../todo-list/todo.service';
+import { ComponentFixture, fakeAsync, TestBed } from "@angular/core/testing";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { of } from "rxjs";
+import { TodoItem } from "../todo-list/todo-item";
+import { TodoService } from "../todo-list/todo.service";
 
-import { TodohistoryComponent } from './todohistory.component';
+import { TodohistoryComponent } from "./todohistory.component";
 
-describe('TodohistoryComponent', () => {
+describe("TodohistoryComponent", () => {
   let component: TodohistoryComponent;
   let fixture: ComponentFixture<TodohistoryComponent>;
-  let route: ActivatedRoute
-  const todoServiceSpy = jasmine.createSpyObj<TodoService>(["getTodoList","deleteTodoItem"]);
+  let route: ActivatedRoute;
+  const todoServiceSpy = jasmine.createSpyObj<TodoService>([
+    "getTodoList",
+    "deleteTodoItem",
+  ]);
   const todoList: TodoItem[] = [
     {
       id: 1,
@@ -23,43 +26,39 @@ describe('TodohistoryComponent', () => {
   ];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TodohistoryComponent ],
-      providers:[        { provide: TodoService, useValue: todoServiceSpy },
+      declarations: [TodohistoryComponent],
+      providers: [
+        { provide: TodoService, useValue: todoServiceSpy },
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({id:1})
+            params: of({ id: 1 }),
           },
         },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
 
-    route = TestBed.inject(ActivatedRoute)
+    route = TestBed.inject(ActivatedRoute);
     fixture = TestBed.createComponent(TodohistoryComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-
   });
 
-
-  it("should get todolist", ((done:DoneFn) => {
-    route.params.subscribe(params=>{
-      expect(params.id).toBe(1)
-      done()
+  it("should get todolist", () => {
+    route.params.subscribe(val=>{
+      expect(val.id).toBe(1)
+      todoServiceSpy.getTodoList.and.returnValue(of(todoList))
+      todoServiceSpy.getTodoList(val.id).subscribe((res)=>{
+        expect(res).toEqual(todoList)
+     
+      })
     })
-    // const id:number = 5
-    // todoServiceSpy.getTodoList.and.returnValue(of(todoList));
-    // todoServiceSpy.getTodoList(id).subscribe((res)=>{
+  });
 
-    //   expect(res).toEqual(todoList);
-    // })
-  }));
-  it("should delete a todo item", fakeAsync(() => {
-  //   const id:number = 1
-  //   todoServiceSpy.deleteTodoItem.and.returnValue(of({}))
-  //   todoServiceSpy.deleteTodoItem(id).subscribe((res)=>{
-  //     expect(res).toEqual({})
-  //   })
-  }))
+  it("should delete a todo item", () => {
+      const id:number = 1
+      todoServiceSpy.deleteTodoItem.and.returnValue(of({}))
+      todoServiceSpy.deleteTodoItem(id).subscribe((res)=>{
+        expect(res).toEqual({})
+      })
+  })
 });
