@@ -38,7 +38,4 @@ describe("RecordsComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  
-
-
 });
