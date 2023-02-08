@@ -5,6 +5,7 @@ import { RecordsComponent } from './records/records.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { TodohistoryComponent } from './todohistory/todohistory.component';
 import { UserGuard } from './userguard';
 
 
@@ -13,8 +14,7 @@ const routes: Routes = [
   {path:'signIn', component:SigninComponent, canActivate:[UserGuard]},
   {path:'signUp', component:SignupComponent, canActivate:[UserGuard]},
   {path:'users-history', component:RecordsComponent,canActivate:[AuthGuard],children:[
-    {path:'',component:RecordsComponent},
-    {path:'/id',component:SigninComponent}
+    {path:'use/:id',component:TodohistoryComponent}
   ]}
 
 ];

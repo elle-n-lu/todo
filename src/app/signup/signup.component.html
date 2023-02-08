@@ -4,6 +4,7 @@
     <input
     [class.is-invalid] = "signupForm.get('name').invalid && signupForm.get('name').touched"
       type="name"
+      (input)="errors.field=''"
       class="form-control"
       placeholder="Enter Name"
       formControlName="name"
@@ -16,6 +17,7 @@
     <input
     [class.is-invalid] = "signupForm.get('email').invalid && signupForm.get('email').touched "
       type="email"
+      (input)="errors.field=''"
       class="form-control"
       id="exampleInputEmail1"
       aria-describedby="emailHelp"
@@ -29,6 +31,7 @@
     <input
     [class.is-invalid] = "signupForm.get('password').invalid && signupForm.get('password').touched "
       type="password"
+      (input)="errors.field=''"
       class="form-control"
       id="exampleInputPassword1"
       placeholder="Password"
