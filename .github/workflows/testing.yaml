@@ -29,7 +29,6 @@ jobs:
         node-version: '18.x'
     - name: Install dependencies
       run: yarn
-    - run: yarn build
     - run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
@@ -37,3 +36,5 @@ jobs:
         yarn test
         env:
           CI: true
+    - name: Show Output
+      run: echo "finished test"
