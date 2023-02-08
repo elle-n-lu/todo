@@ -13,7 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+      CI: 'true'
     strategy:
       matrix:
         node-version: [ 18.x]
@@ -28,4 +30,8 @@ jobs:
     - name: Install dependencies
       run: yarn
     - run: yarn build
-    - run: yarn test
+    - run: |
+        export DISPLAY=:99
+        chromedriver --url-base=/wd/hub &
+        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+        yarn test
