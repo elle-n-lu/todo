@@ -19,9 +19,8 @@ jobs:
         node-version: [ 18.x]
     steps:
     - uses: actions/checkout@v3
-    - name: update
-      run: sudo apt-get update
-            sudo apt-get install -y libgbm-dev
+    - run: sudo apt-get update
+    - run: sudo apt-get install -y libgbm-dev
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
