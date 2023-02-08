@@ -1,0 +1,26 @@
+<p>todohistory works!</p>
+<div  style="width:500px;">
+    <button type="button" class="btn btn-outline-primary" routerLink="/users-history" >Back</button>
+    <table class="table" style="margin-left: 10px">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">todo item</th>
+          <th scope="col">translated</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of _todolist; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <th>{{ item.description }}</th>
+          <th>
+            <input type="checkbox" [checked]="item.iscompleted" disabled />
+          </th>
+          <th>
+            <button type="button" class="btn btn-outline-warning" (click)="deleteTodo(item.id)">x</button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>

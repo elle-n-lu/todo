@@ -13,9 +13,12 @@ import { SignupComponent } from './signup/signup.component';
 import { UserStatusService } from "./signin/userStatus.service";
 import { counterReducer } from "./test/user.reducers";
 import { RecordsComponent } from './records/records.component';
+import { TodohistoryComponent } from './todohistory/todohistory.component';
+import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
-  declarations: [AppComponent, TodoListComponent, TestComponent, SigninComponent, SignupComponent, RecordsComponent],
+  declarations: [AppComponent, TodoListComponent, TestComponent, SigninComponent, SignupComponent, RecordsComponent, TodohistoryComponent],
   imports: [
     StoreModule.forRoot({userstate:counterReducer}),
     BrowserModule,
@@ -24,6 +27,8 @@ import { RecordsComponent } from './records/records.component';
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [HttpClient, UserStatusService],
   bootstrap: [AppComponent],

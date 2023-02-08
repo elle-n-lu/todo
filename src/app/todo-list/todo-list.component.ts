@@ -1,14 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { errors } from "../signup/signup.component";
+import { UserParams } from "../test/user-params";
 import { TodoItem } from "./todo-item";
 import { TodoService } from "./todo.service";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { UserParams } from "../test/user-params";
-import { UserStatusService } from "../signin/userStatus.service";
 import { GoogleObj } from "./translateType";
-import { Router } from "@angular/router";
-import { errors } from "../signup/signup.component";
 type languageParams = {
   code: string;
   language: string;
@@ -36,11 +35,11 @@ export class TodoListComponent implements OnInit {
   // public onAddEditComplete: Subject<void> = new Subject(); // the ajax complete result callback
 
   constructor(
-    private todoService: TodoService // private userStatusService: UserStatusService,
-  ) // private router: Router
-  {}
+    private todoService: TodoService, // private userStatusService: UserStatusService,
+    private toastr: ToastrService
+  ) {}
 
-  todo: TodoItem={description: ""}
+  todo: TodoItem = { description: "" };
 
   private _getTodoListDestroyed$: Subject<TodoItem[]> = new Subject();
   private _deleteTodoItemDestroyed$: Subject<any> = new Subject();
@@ -78,10 +77,10 @@ export class TodoListComponent implements OnInit {
             id: res.id,
             userid: res.userid,
           };
+          this.toastr.success("succeed to add");
         },
         (err) => {
           if (err.error.field === "userid") {
-            // alert('login')
             this.errors = { field: "userid", message: "login needed" };
           }
           if (err.error.field === "description") {
@@ -117,7 +116,7 @@ export class TodoListComponent implements OnInit {
       this.todoService
         .translateChange(id)
         .pipe(takeUntil(this._translateChangeDestroyed$))
-        .subscribe((res) => console.log("translated"));
+        .subscribe((res) => this.toastr.success("succeed to translate"));
     } else {
       this.todoService.translate(transObj).subscribe((res: any) => {
         this.todoTranslated = res.data.translations[0].translatedText;

@@ -2,7 +2,7 @@
 
   <div class="mb-3">
     <textarea class="form-control" id="todoDescription" rows="3" [value]="todo.description"
-      (change)="todo.description = getValue($event)"></textarea>
+      (change)="todo.description = getValue($event)" (input)="errors.field=''"></textarea>
     <p *ngIf="this.errors.field === 'userid'" style="color: red;">{{ errors.message }}</p>
     <p *ngIf="this.errors.field === 'description'" style="color: red;">{{ errors.message }}</p>
   </div>

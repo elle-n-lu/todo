@@ -1,6 +1,6 @@
 <form [formGroup]="signinForm"
  style="width: 400px; margin-top: 80px" 
- (ngSubmit)="signIn(this.signinForm.value)" [(ngModel)]="user"
+ (ngSubmit)="signIn(this.signinForm.value)" 
  >
   <div class="form-group mb-3">
     <label for="exampleInputEmail1" class="form-label">Name or Email</label>
@@ -12,6 +12,7 @@
       aria-describedby="emailHelp"
       placeholder="Enter email"
       formControlName="name"
+      (input)="errors.field=''"
       required
     />
     <p *ngIf="this.errors.field === 'nameOrEmail'" style="color: red;">{{ errors.message }}</p>
@@ -25,6 +26,7 @@
       id="exampleInputPassword1"
       placeholder="Password"
       formControlName="password"
+      (input)="errors.field=''"
       required
     />
     <p *ngIf="this.errors.field === 'password'" style="color: red;">{{ errors.message }}</p>
