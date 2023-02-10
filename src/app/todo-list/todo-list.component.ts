@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -8,7 +7,7 @@ import { UserParams } from "../test/user-params";
 import { TodoItem } from "./todo-item";
 import { TodoService } from "./todo.service";
 import { GoogleObj } from "./translateType";
-type languageParams = {
+export type languageParams = {
   code: string;
   language: string;
 };
@@ -20,7 +19,6 @@ type languageParams = {
 })
 export class TodoListComponent implements OnInit {
   errors: errors = { field: "", message: "sadsadasd" };
-  lang = new FormControl("en");
   languages: languageParams[] = [
     { code: "en", language: "English" },
     { code: "es", language: "Spanish" },
@@ -32,10 +30,8 @@ export class TodoListComponent implements OnInit {
   todoTranslated: string = "";
 
   userStatus: UserParams;
-  // public onAddEditComplete: Subject<void> = new Subject(); // the ajax complete result callback
-
   constructor(
-    private todoService: TodoService, // private userStatusService: UserStatusService,
+    private todoService: TodoService, 
     private toastr: ToastrService
   ) {}
 
@@ -116,7 +112,7 @@ export class TodoListComponent implements OnInit {
       this.todoService
         .translateChange(id)
         .pipe(takeUntil(this._translateChangeDestroyed$))
-        .subscribe((res) => this.toastr.success("succeed to translate"));
+        .subscribe(() => this.toastr.success("succeed to translate"));
     } else {
       this.todoService.translate(transObj).subscribe((res: any) => {
         this.todoTranslated = res.data.translations[0].translatedText;

@@ -1,5 +1,7 @@
+import { DebugElement } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { Router } from "@angular/router";
 import { of } from "rxjs";
 import { UserStatusService } from "../signin/userStatus.service";
 
@@ -17,14 +19,15 @@ describe("TestComponent", () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
   const userStatusServiceSpy = jasmine.createSpyObj<UserStatusService>([
-    "getUser",
+    "getUser","setUser"
   ]);
-
+  const routerSpy = jasmine.createSpyObj("Router", ["navigate"]);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TestComponent],
       providers: [
         { provide: UserStatusService, useValue: userStatusServiceSpy },
+        { provide: Router, useValue: routerSpy },
       ],
     }).compileComponents();
 
@@ -32,14 +35,37 @@ describe("TestComponent", () => {
     component = fixture.componentInstance;
   });
 
-  it("should get user login state", () => {
+  it("should initialize user status", () => {
+    expect(component.userStatus).toBeUndefined;
     userStatusServiceSpy.getUser.and.returnValue(of(userStatus));
+    component.ngOnInit();
 
+    expect(component.userStatus).toEqual(userStatus);
     fixture.detectChanges();
-    expect(component).toBeTruthy();
+
+    const avatarbtn = fixture.debugElement.nativeElement.querySelector('#avartart-name')
+    expect(avatarbtn.innerHTML).toContain(userStatus.name[0].toLocaleUpperCase())
   });
-  it("should get user logout",fakeAsync(()=>{
-    const userstate = null
-    expect(userstate).toBeNull()
-  }))
+
+  it("should navigate to signin page",()=>{
+    //click btn to navigate router path
+  })
+
+  it("should navigate to signup page",()=>{
+    //click btn to navigate router path
+  })
+
+  it("should setuser be called", fakeAsync(() => {
+    const userstate = null;
+    userStatusServiceSpy.setUser(null)
+    expect(userStatusServiceSpy.setUser).toHaveBeenCalled()
+    expect(userstate).toBeNull();
+    expect(routerSpy.navigate).toBeDefined();
+    routerSpy.navigate("/");
+    expect(routerSpy.navigate).toHaveBeenCalled();
+    const navArgs = routerSpy.navigate.calls.first().args[0] as string;
+    // expecting to navigate to id of the component's first hero
+    expect(navArgs).toContain("/");
+
+  }));
 });

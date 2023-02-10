@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserStatusService } from "../signin/userStatus.service";
 import { UserParams } from "./user-params";
@@ -11,7 +11,6 @@ import { UserParams } from "./user-params";
 export class TestComponent {
   //change banner user status
   userStatus: UserParams;
-  @ViewChild("test") public test: TemplateRef<any>;
 
   constructor(
     private userStatusService: UserStatusService,
@@ -30,8 +29,7 @@ export class TestComponent {
   logOut() {
     localStorage.setItem("userinfo", "");
     this.userStatusService.setUser(null);
-
     this.router.navigate(["/"]);
-    location.reload()
+    location.reload();
   }
 }
