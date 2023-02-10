@@ -1,19 +1,15 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-// import { HandleError, HttpErrorHandler } from "../shared/http-error-handler.service";
-import { TodoItem } from "./todo-item";
-import { catchError, map } from "rxjs/operators";
 import { Observable, throwError } from "rxjs";
-import { formatDate } from "@angular/common";
+import { catchError, map } from "rxjs/operators";
+import { TodoItem } from "./todo-item";
 import { GoogleObj } from "./translateType";
-import { UserParams } from "../test/user-params";
 
 @Injectable({
   providedIn: "root",
 })
 export class TodoService {
-  // private handleError: HandleError; // for general error handling (can be improved)
   private todoBaseUrl = `${environment.apiUrl}/tasks`; // URL to todo api
   constructor(private http: HttpClient) {}
 
@@ -64,6 +60,7 @@ export class TodoService {
       .get<TodoItem>(`${this.todoBaseUrl}/translateChange/${id}`)
       .pipe(catchError(this.handleError));
   }
+  //google api url
   url = "https://translation.googleapis.com/language/translate/v2?key=";
   key = environment.envVar.API_KEY;
 

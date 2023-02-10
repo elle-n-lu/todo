@@ -8,8 +8,8 @@
   </div>
 
   <div class="mb-3" style="text-align: center;">
-    <button class="btn btn-outline-primary" (click)="translate(todo.id)">Translate</button>
-    <button style="margin-left: 15px;" class="btn btn-secondary" (click)="addTodoItem(todo)">
+    <button id="translatebtn" class="btn btn-outline-primary" (click)="translate(todo.id)">Translate</button>
+    <button id="add-btn" style="margin-left: 15px;" class="btn btn-secondary" (click)="addTodoItem(todo)">
       Add
     </button>
     <button id="resetbtn" style="margin-left: 15px;" type="button" class="btn btn-light" (click)="cancelAdd()">
@@ -20,14 +20,14 @@
     <div class="d-flex" style="align-items: center;justify-content: center;margin-bottom: 10px;">
 
       <label for="todoDescription" class="form-label">Choose Language</label>
-      <select name="location" id="location" [(ngModel)]="language.code" (ngModelChange)="setChange()"
+      <select name="location" id="select-location" [(ngModel)]="language.code" (ngModelChange)="setChange()"
         class="form-control" style="width: 150px;margin-left: 20px;">
 
         <option value="{{language}}" *ngFor="let language of languages" [value]="language.code">{{language.language}}
         </option>
       </select>
     </div>
-    <textarea class="form-control" id="todoDescription" rows="3" [value]="todoTranslated"></textarea>
+    <textarea class="form-control" id="translateTodo" rows="3" [value]="todoTranslated"></textarea>
   </div>
 </div>
 <div class="userrecord" *ngIf="userStatus?.isadmin">

@@ -1,6 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { UserParams } from "./user-params";
-import {  USER_LOGOUT, USER_SIGNIN } from "./user.actions";
+import { USER_LOGOUT, USER_SIGNIN } from "./user.actions";
 
 
 const initialUser: any = localStorage.getItem('userinfo')

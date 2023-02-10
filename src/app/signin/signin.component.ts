@@ -20,59 +20,76 @@ export class SigninComponent {
   constructor(
     private userService: UserService,
     private userStatusService: UserStatusService,
-    private router: Router,
-  ) {}
-  private _signInDestroyed$: Subject<any> = new Subject();
-  
-  ngOnInit(): void {
+    private router: Router
+  ) {
     this.signinForm = new FormGroup({
       name: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required),
     });
   }
+  private _signInDestroyed$: Subject<any> = new Subject();
+
+  ngOnInit(): void {}
+
+  //can be ignored
+  get f() {
+    return this.signinForm.controls;
+  }
   ngOnDestroy(): void {
     this._signInDestroyed$.complete();
   }
- 
-  signIn(user: UserParams): void {
-   
+
+  signIn(signinData: UserParams): void {
+    if (this.signinForm.invalid) {
+      return;
+    }
+    const signinDataBody = {
+      name: signinData.name,
+      password: signinData.password,
+    };
+
     this.userService
-      .signIn(user)
+      .signIn(signinDataBody)
       .pipe(takeUntil(this._signInDestroyed$))
       .subscribe(
         (res) => {
           //use service to store and pass user info
           this.userStatusService.setUser({
-            email: res[0].email,
-            name: res[0].name,
-            password: res[0].password,
-            id: res[0].id,
-            isadmin: res[0].isadmin,
+            email: res.email,
+            name: res.name,
+            password: res.password,
+            id: res.id,
+            isadmin: res.isadmin,
           });
           //use localtorage to save userinfo and reducer to change state
           localStorage.setItem(
             "userinfo",
             JSON.stringify({
-              email: res[0].email,
-              name: res[0].name,
-              password: res[0].password,
-              id: res[0].id,
-              isadmin: res[0].isadmin,
+              email: res.email,
+              name: res.name,
+              password: res.password,
+              id: res.id,
+              isadmin: res.isadmin,
             })
           );
-          if(res[0].isadmin){
+          if (res.isadmin) {
             this.router.navigate(["/users-history"]);
-          }else{
-
+          } else {
             this.router.navigate(["/"]);
           }
         },
         (err) => {
-          if (err.error.field==="nameOrEmail") {
-            this.errors = { field: "nameOrEmail", message: "username or email not correct" };
+          if (err.error.field === "nameOrEmail") {
+            this.errors = {
+              field: "nameOrEmail",
+              message: "username or email not correct",
+            };
           }
-          if (err.error.field==="password") {
-            this.errors = { field: "password", message: "password not correct" };
+          if (err.error.field === "password") {
+            this.errors = {
+              field: "password",
+              message: "password not correct",
+            };
           }
         }
       );

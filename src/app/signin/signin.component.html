@@ -2,22 +2,20 @@
  style="width: 400px; margin-top: 80px" 
  (ngSubmit)="signIn(this.signinForm.value)" 
  >
-  <div class="form-group mb-3">
+  <div id="username-container" class="form-group mb-3">
     <label for="exampleInputEmail1" class="form-label">Name or Email</label>
     <input
     [class.is-invalid] = "signinForm.get('name').invalid && signinForm.get('name').touched "
-      type="email"
+      type="name"
       class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-      placeholder="Enter email"
+      placeholder="Enter name"
       formControlName="name"
       (input)="errors.field=''"
       required
     />
     <p *ngIf="this.errors.field === 'nameOrEmail'" style="color: red;">{{ errors.message }}</p>
   </div>
-  <div class="form-group mb-3">
+  <div id="password-container" class="form-group mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
     <input
     [class.is-invalid] = "signinForm.get('password').invalid && signinForm.get('password').touched "
@@ -32,5 +30,5 @@
     <p *ngIf="this.errors.field === 'password'" style="color: red;">{{ errors.message }}</p>
   </div>
 
-  <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+  <button id="login-btn-container" type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
 </form>
