@@ -35,6 +35,14 @@
             "scripts": [ "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
           },
           "configurations": {
+            "development":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.prod.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
