@@ -1,13 +1,13 @@
+import { Location } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { of } from "rxjs";
 import { UserService } from "../test/user.service";
-import { Location } from "@angular/common";
-import { RecordsComponent } from "./records.component";
-import { Route, Router } from "@angular/router";
 import { TodohistoryComponent } from "../todohistory/todohistory.component";
-import { By } from "@angular/platform-browser";
+import { RecordsComponent } from "./records.component";
 const userList = [
   {
     id: 5,

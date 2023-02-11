@@ -1,10 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { Location } from "@angular/common";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { of } from "rxjs";
 import { TodoItem } from "../todo-list/todo-item";
 import { TodoService } from "../todo-list/todo.service";
-import { Location } from "@angular/common";
 import { TodohistoryComponent } from "./todohistory.component";
 
 describe("TodohistoryComponent", () => {

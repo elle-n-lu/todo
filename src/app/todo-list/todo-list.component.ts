@@ -107,7 +107,7 @@ export class TodoListComponent implements OnInit {
 
     if (this.todo.id) {
       this.todoService.translate(transObj).subscribe((res: any) => {
-        this.todoTranslated = res.data.translations[0].translatedText;
+        this.todoTranslated = res[0]
       });
       this.todoService
         .translateChange(id)
@@ -115,7 +115,8 @@ export class TodoListComponent implements OnInit {
         .subscribe(() => this.toastr.success("succeed to translate"));
     } else {
       this.todoService.translate(transObj).subscribe((res: any) => {
-        this.todoTranslated = res.data.translations[0].translatedText;
+      
+        this.todoTranslated = res[0]
       });
     }
   }

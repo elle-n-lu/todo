@@ -55,29 +55,30 @@ export class SigninComponent {
         (res) => {
           //use service to store and pass user info
           this.userStatusService.setUser({
-            email: res.email,
-            name: res.name,
-            password: res.password,
-            id: res.id,
-            isadmin: res.isadmin,
+            email: res[0].email,
+            name: res[0].name,
+            password: res[0].password,
+            id: res[0].id,
+            isadmin: res[0].isadmin,
           });
           //use localtorage to save userinfo and reducer to change state
           localStorage.setItem(
             "userinfo",
             JSON.stringify({
-              email: res.email,
-              name: res.name,
-              password: res.password,
-              id: res.id,
-              isadmin: res.isadmin,
+              email: res[0].email,
+              name: res[0].name,
+              password: res[0].password,
+              id: res[0].id,
+              isadmin: res[0].isadmin,
             })
           );
-          if (res.isadmin) {
+          if (res[0].isadmin) {
             this.router.navigate(["/users-history"]);
           } else {
             this.router.navigate(["/"]);
           }
         },
+        //show error if return errors
         (err) => {
           if (err.error.field === "nameOrEmail") {
             this.errors = {

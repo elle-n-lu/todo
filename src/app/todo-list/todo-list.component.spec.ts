@@ -1,12 +1,11 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
-import { TodoListComponent } from "./todo-list.component";
+import { languageParams, TodoListComponent } from "./todo-list.component";
 import { TodoService } from "./todo.service";
 import { GoogleObj } from "./translateType";
-import { languageParams } from "./todo-list.component";
 const todoItem = {
   description: "hello",
 };

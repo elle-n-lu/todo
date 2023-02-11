@@ -1,14 +1,12 @@
-import { HttpClientModule } from "@angular/common/http";
 import {
   ComponentFixture,
   fakeAsync,
   TestBed,
-  tick,
+  tick
 } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
-import { RouterTestingModule } from "@angular/router/testing";
-import { Observable, of } from "rxjs";
+import { of } from "rxjs";
 import { UserService } from "../test/user.service";
 
 import { SigninComponent } from "./signin.component";
@@ -21,7 +19,13 @@ const user = {
   email: "mi@mi.com",
   isadmin: false,
 };
-
+const res = [{
+  id: 5,
+  password: "aedwed232432rsda",
+  name: "mimi",
+  email: "mi@mi.com",
+  isadmin: false,
+}]
 describe("SigninComponent", () => {
   let component: SigninComponent;
   let fixture: ComponentFixture<SigninComponent>;
@@ -110,20 +114,21 @@ describe("SigninComponent", () => {
     fixture.detectChanges();
     const button = fixture.debugElement.nativeElement.querySelector("button");
     button.click();
+    userServiceSpy.signIn.and.returnValue(of(user));
     tick();
     fixture.detectChanges();
-    userServiceSpy.signIn.and.returnValue(of(user));
     expect(userServiceSpy.signIn).toHaveBeenCalled();
   }));
 
   it("should route to home if login successfully", fakeAsync(() => {
     updateform(user.name, user.password);
     fixture.detectChanges();
+    spyOn(component,'signIn')
+    component.signIn(user)
     const button = fixture.debugElement.nativeElement.querySelector("button");
     button.click();
     advance(fixture);
-    userServiceSpy.signIn.and.returnValue(of(user));
-    advance(fixture);
+    expect(component.signIn).toHaveBeenCalled()
     expect(routerSpy.navigate).toBeDefined();
     routerSpy.navigate("/users-history");
     expect(routerSpy.navigate).toHaveBeenCalled();

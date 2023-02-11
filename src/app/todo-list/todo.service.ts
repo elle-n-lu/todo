@@ -60,11 +60,11 @@ export class TodoService {
       .get<TodoItem>(`${this.todoBaseUrl}/translateChange/${id}`)
       .pipe(catchError(this.handleError));
   }
-  //google api url
-  url = "https://translation.googleapis.com/language/translate/v2?key=";
-  key = environment.envVar.API_KEY;
 
   translate(obj: GoogleObj) {
-    return this.http.post(this.url + this.key, obj);
+    return this.http.post(`${this.todoBaseUrl}/translate`,{
+      text: obj.q,
+      target:obj.target
+    })
   }
 }
