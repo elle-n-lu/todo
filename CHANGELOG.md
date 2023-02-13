@@ -3,20 +3,16 @@
 
 ### Features
 
-* update translate service & testing file prettier ([a07e9c5](https://github.com/elle-n-lu/todo/commit/a07e9c57f711cf43e2aac9cf0221f1ff90699365))
+* add delete todo func; router guard ([8d5c27d](https://github.com/elle-n-lu/todo/commit/8d5c27dbe12adf6a8b3753477ae8fcc50685b45c))
+* add translate function, router function; ([d8929da](https://github.com/elle-n-lu/todo/commit/d8929da87f3614f34ec464170cb2e4e1306edd63))
+* separate todolist to single component; add toast ([8b955c0](https://github.com/elle-n-lu/todo/commit/8b955c03922aae7b6bc9a02865db803ee2073b4d))
+* update translate service & testing file prettier ([bd67eb9](https://github.com/elle-n-lu/todo/commit/bd67eb9bdfdea268091a1c18008efc17e326630d))
 
 
 ### Performance Improvements
 
-* env setting ([63646ed](https://github.com/elle-n-lu/todo/commit/63646ed098c23e324f734d81d4fd57e0b9f8345f))
-
-
-
-# 0.1.0 (2023-02-13)
-
-
-
-# 0.1.0 (2023-02-13)
+* env setting ([c16d2cd](https://github.com/elle-n-lu/todo/commit/c16d2cd750c62108c565145ecf6a428f93856e75))
+* router redirect; ([46d7c31](https://github.com/elle-n-lu/todo/commit/46d7c312779525e1c260ca0b7126d15a37ccd160))
 
 
 
