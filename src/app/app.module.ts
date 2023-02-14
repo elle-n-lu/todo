@@ -11,7 +11,7 @@ import { TestComponent } from "./test/test.component";
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserStatusService } from "./signin/userStatus.service";
-import { counterReducer } from "./test/user.reducers";
+import { transReducer } from "./test/user.reducers";
 import { RecordsComponent } from './records/records.component';
 import { TodohistoryComponent } from './todohistory/todohistory.component';
 import { ToastrModule } from "ngx-toastr";
@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 @NgModule({
   declarations: [AppComponent, TodoListComponent, TestComponent, SigninComponent, SignupComponent, RecordsComponent, TodohistoryComponent],
   imports: [
-    StoreModule.forRoot({userstate:counterReducer}),
+    StoreModule.forRoot({trans:transReducer}),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

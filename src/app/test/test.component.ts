@@ -9,6 +9,7 @@ import { UserParams } from "./user-params";
   styleUrls: ["./test.component.scss"],
 })
 export class TestComponent {
+  //this component is to show the signin/up button, check login status and change the banner UI
   //change banner user status
   userStatus: UserParams;
 
@@ -16,7 +17,7 @@ export class TestComponent {
     private userStatusService: UserStatusService,
     private router: Router
   ) {}
-
+  //when the component load, check and change the user status immeially 
   ngOnInit(): void {
     this.userStatusService.getUser().subscribe((data) => {
       this.userStatus = data;
@@ -25,7 +26,7 @@ export class TestComponent {
       this.userStatus = JSON.parse(localStorage.getItem("userinfo"));
     }
   }
-
+  //clear localstorage user info also use service to change login user to null
   logOut() {
     localStorage.setItem("userinfo", "");
     this.userStatusService.setUser(null);
