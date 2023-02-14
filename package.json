@@ -1,6 +1,6 @@
 {
   "name": "angular-todo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
@@ -9,7 +9,8 @@
     "test:ci": "ng test --browsers=ChromeHeadless --progress=false --watch=false --source-map=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "json-server --watch ./server/database.json"
+    "server": "json-server --watch ./server/database.json",
+    "release": "standard-version"
   },
   "private": true,
   "dependencies": {
