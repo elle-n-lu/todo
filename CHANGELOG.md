@@ -1,10 +1,4 @@
-# Changelog
-
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
-### [0.1.1](https://github.com/elle-n-lu/todo/compare/v0.1.2...v0.1.1) (2023-02-14)
-
-# 0.1.0 (2023-02-13)
+## 0.1.1 (2023-02-14)
 
 
 ### Features
@@ -19,3 +13,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * env setting ([c16d2cd](https://github.com/elle-n-lu/todo/commit/c16d2cd750c62108c565145ecf6a428f93856e75))
 * router redirect; ([46d7c31](https://github.com/elle-n-lu/todo/commit/46d7c312779525e1c260ca0b7126d15a37ccd160))
+
+
+
